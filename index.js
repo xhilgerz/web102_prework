@@ -35,6 +35,8 @@ function addGamesToPage(games) {
    
         // create a new div element, which will become the game card
          const gameCard = document.createElement('div');
+         const donateBtn = document.createElement('div');
+    
 
         // add the class game-card to the list
 
@@ -45,7 +47,10 @@ function addGamesToPage(games) {
         <h3>${game.name}</h3>
         <p>${game.description}</p>
         <p>Backers: ${game.backers}</p>
-    `;
+        <button id="donate-btn">Donate!</button>
+        `;
+        
+    
 
         // TIP: if your images are not displaying, make sure there is space
         // between the end of the src attribute and the end of the tag ("/>")
@@ -54,6 +59,8 @@ function addGamesToPage(games) {
         // append the game to the games-container
         
             gamesContainer.appendChild(gameCard);
+            gamesContainer.appendChild(donateBtn);
+           
     }
 }
 
@@ -223,3 +230,34 @@ dispSecGame.innerHTML = `
 firstGameContainer.appendChild(dispFirstGame);
 secondGameContainer.appendChild(dispSecGame);
 // do the same for the runner up item
+
+//extra stuff
+
+
+
+
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+  
+  // Function to add 'visible' class when the element is in the viewport
+  function checkVisibility() {
+    const elements = document.querySelectorAll('.game-card');
+    elements.forEach((element) => {
+      if (isInViewport(element)) {
+        element.classList.add('visible');
+      }
+    });
+  }
+  
+  // Add event listener for scroll event
+  window.addEventListener('scroll', checkVisibility);
+  
+  // Check visibility on load
+  document.addEventListener('DOMContentLoaded', checkVisibility);
