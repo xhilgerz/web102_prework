@@ -169,11 +169,22 @@ const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
 
+const totalUnfunded = GAMES_JSON.filter((game) => game.pledged < game.goal).length;
+
 
 // create a string that explains the number of unfunded games using the ternary operator
-
+let displayString = `A total of $${totalRaised.toLocaleString('en-US')} has been raised for ${totalGames} games.
+Currently, ${totalUnfunded} ${totalUnfunded > 1 ? "games" : "game"} remain unfunded. We need your help to fund these amazing games!`;
 
 // create a new DOM element containing the template string and append it to the description container
+const paragraphText = document.createElement('div');
+paragraphText.classList.add('paragraph-text');
+
+paragraphText.innerHTML = `
+<p>${displayString}</p>
+`;
+
+descriptionContainer.appendChild(paragraphText);
 
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
@@ -189,6 +200,26 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
 
 // use destructuring and the spread operator to grab the first and second games
 
+const [firstGame, secondGame, ...otherGames] = sortedGames;
+
+const { name: firstName, desc: firstDesc, pledged: firstPledged, goal: firstGoal, backers: firstBackers, img: firstImg } = firstGame;
+const { name: secondName, desc: secondDesc, pledged: secondPledged, goal: secondGoal, backers: secondBackers, img: secondImg } = secondGame;
+
+
 // create a new element to hold the name of the top pledge game, then append it to the correct element
 
+const dispFirstGame = document.createElement('div');
+dispFirstGame.classList.add('first-text');
+dispFirstGame.innerHTML = `
+<p>${firstName}</p>
+`;
+
+const dispSecGame = document.createElement('div');
+dispSecGame.classList.add('second-text');
+dispSecGame.innerHTML = `
+<p>${secondName}</p>
+`;
+
+firstGameContainer.appendChild(dispFirstGame);
+secondGameContainer.appendChild(dispSecGame);
 // do the same for the runner up item
